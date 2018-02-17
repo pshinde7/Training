@@ -3,7 +3,6 @@ package com.spr.student;
 public class Student {
 	
 	String studentName;
-	
 	int rollNo;
 	String year;
 	int [] semMarks = new int [2];
