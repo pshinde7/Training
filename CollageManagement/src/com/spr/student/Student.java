@@ -2,7 +2,7 @@ package com.spr.student;
 
 public class Student {
 	
-	String studentName;
+	String studentName;//testing
 	int rollNo;
 	String year;
 	int [] semMarks = new int [2];
