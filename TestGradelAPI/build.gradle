@@ -38,10 +38,13 @@ buildscript {
     }
 }
 dependencies {
+	compile group: 'org.json', name: 'json', version: '20180130'
 
     compile('org.springframework.boot:spring-boot-starter',
     'org.springframework.boot:spring-boot-starter-web',
-    'org.springframework.boot:spring-boot-starter-thymeleaf')
+    'org.springframework.boot:spring-boot-starter-thymeleaf','org.springframework.boot:spring-boot-starter-jdbc')
+	compile fileTree(dir: 'src/main/resources/lib/', includes: ['*.jar'])
+
     
 }
 
