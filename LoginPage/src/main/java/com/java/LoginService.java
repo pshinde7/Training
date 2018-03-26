@@ -7,6 +7,7 @@ import java.sql.Statement;
 
 import javax.sql.DataSource;
 
+import org.omg.PortableInterceptor.SUCCESSFUL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import groovy.util.logging.Log;
 
 @RestController
 @RequestMapping("/login")
@@ -26,16 +29,17 @@ public class LoginService {
 	public ResponseEntity<LoginData> requestMethodName(@RequestBody LoginData loginData) {
 		
 		try {
-			extractData();
+			String status=extractData(loginData);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		return new ResponseEntity<LoginData>(loginData, HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
+				//ResponseEntity<LoginData>(loginData, HttpStatus.OK);
 	}
 
-	private void extractData() throws SQLException {
+	private String extractData(LoginData loginData) throws SQLException {
 		System.out.println("Creating statement...");
 
 		Connection conn= od.getConnection();
@@ -54,9 +58,13 @@ public class LoginService {
 				String password = rs.getString("PASSWORD");
 
 				// Display values
+				if (loginData.getUserName().equals(userName) && loginData.getPasswod().equals(password)) {
+					System.out.print(" First: " + userName);
+					System.out.println(" Last: " + password);
+				return "SUCCESSFUL";
+				}
 
-				System.out.print(", First: " + userName);
-				System.out.println(", Last: " + password);
+				
 			}
 			// STEP 6: Clean-up environment
 			rs.close();
@@ -83,6 +91,7 @@ public class LoginService {
 			} // end finally try
 		} // end try
 		System.out.println("Goodbye!");
+		return "FAIL";
 	}
 
 }
